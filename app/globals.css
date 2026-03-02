@@ -1,0 +1,306 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Background com gradiente dinâmico e partículas */
+body {
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(244, 63, 94, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(244, 63, 94, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, rgba(30, 41, 59, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Efeito de partículas animadas */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(2px 2px at 20% 30%, rgba(244, 63, 94, 0.6) 1px, transparent 50%),
+    radial-gradient(2px 2px at 80% 70%, rgba(244, 63, 94, 0.4) 1px, transparent 50%),
+    radial-gradient(1px 1px at 40% 80%, rgba(244, 63, 94, 0.3) 1px, transparent 50%),
+    radial-gradient(1px 1px at 60% 10%, rgba(244, 63, 94, 0.2) 1px, transparent 50%);
+  background-size: 200px 200px;
+  z-index: -1;
+  animation: particle-float 6s ease-in-out infinite;
+}
+
+/* Gradiente de texto salmão premium */
+.gradient-text {
+  background: linear-gradient(135deg, 
+    #fecdd3 0%, 
+    #fda4af 25%, 
+    #f43f5e 50%, 
+    #e11d48 75%, 
+    #be123c 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease-in-out infinite;
+  position: relative;
+}
+
+/* Efeito de brilho adicional no texto */
+.gradient-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(254, 205, 211, 0.3) 0%, 
+    rgba(253, 164, 175, 0.2) 50%, 
+    rgba(244, 63, 94, 0.4) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 4s ease-in-out infinite reverse;
+  opacity: 0.5;
+}
+
+/* Glassmorphism premium com salmão */
+.glass-effect {
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.8) 0%, 
+    rgba(30, 41, 59, 0.6) 100%);
+  backdrop-filter: blur(25px) saturate(200%);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  border-radius: 24px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(244, 63, 94, 0.1),
+    0 0 30px rgba(244, 63, 94, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho interno */
+.glass-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(244, 63, 94, 0.1), 
+    transparent);
+  transition: left 0.6s ease;
+}
+
+.glass-effect:hover::before {
+  left: 100%;
+}
+
+/* Corrigir contorno na navegação */
+nav.glass-effect {
+  border: none !important;
+  outline: none !important;
+}
+
+/* Garantir que não haja bordas indesejadas */
+nav {
+  box-shadow: none !important;
+}
+
+/* Quando no topo, garantir transparência total */
+nav:not(.glass-effect) {
+  background: transparent !important;
+  backdrop-filter: none !important;
+}
+
+/* Botão com gradiente salmão animado */
+.gradient-button {
+  background: linear-gradient(135deg, 
+    #fda4af 0%, 
+    #f43f5e 50%, 
+    #e11d48 100%);
+  background-size: 200% 200%;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.3), 
+    transparent);
+  transition: left 0.6s ease;
+}
+
+.gradient-button:hover::before {
+  left: 100%;
+}
+
+.gradient-button:hover {
+  background-position: 100% 100%;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 15px 40px rgba(244, 63, 94, 0.5),
+    0 0 30px rgba(244, 63, 94, 0.3);
+}
+
+/* Efeito de partículas orbitais */
+.orbital-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(244, 63, 94, 0.8);
+  border-radius: 50%;
+  animation: orbit 20s linear infinite;
+}
+
+.orbital-particle:nth-child(2) {
+  animation-delay: -5s;
+  background: rgba(244, 63, 94, 0.6);
+}
+
+.orbital-particle:nth-child(3) {
+  animation-delay: -10s;
+  background: rgba(244, 63, 94, 0.4);
+}
+
+.orbital-particle:nth-child(4) {
+  animation-delay: -15s;
+  background: rgba(244, 63, 94, 0.2);
+}
+
+/* Efeito de neon glow */
+.neon-glow {
+  filter: drop-shadow(0 0 10px rgba(244, 63, 94, 0.7));
+  animation: neon-glow 2s ease-in-out infinite alternate;
+}
+
+/* Texto com brilho sutil */
+.text-glow {
+  text-shadow: 0 0 20px rgba(244, 63, 94, 0.5), 
+               0 0 40px rgba(244, 63, 94, 0.3),
+               0 0 60px rgba(244, 63, 94, 0.1);
+}
+
+/* Efeito de scanline sutil */
+.scanline-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    transparent 50%, 
+    rgba(244, 63, 94, 0.03) 50%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Scrollbar customizada salmão */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #fda4af, #f43f5e);
+  border-radius: 6px;
+  border: 2px solid #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+}
+
+/* Animações de entrada dramáticas */
+.fade-in-up {
+  animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(80px) scale(0.9);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.stagger-delay-1 { animation-delay: 0.1s; }
+.stagger-delay-2 { animation-delay: 0.2s; }
+.stagger-delay-3 { animation-delay: 0.3s; }
+.stagger-delay-4 { animation-delay: 0.4s; }
+
+/* Responsividade premium */
+@media (max-width: 768px) {
+  .glass-effect {
+    backdrop-filter: blur(15px);
+    border-radius: 16px;
+  }
+  
+  .gradient-text {
+    background-size: 150% 150%;
+  }
+  
+  .gradient-button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+}
+
+/* Suporte para reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
