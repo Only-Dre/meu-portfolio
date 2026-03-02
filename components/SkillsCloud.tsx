@@ -31,40 +31,33 @@ const SkillsCloud = () => {
   ]
 
   const SkillPill = ({ skill, category, index }: { skill: string; category: any; index: number }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0, y: 20 }}
+    whileInView={{ opacity: 1, scale: 1, y: 0 }}
+    whileHover={{ 
+      scale: 1.1, 
+      y: -5,
+      transition: { duration: 0.2 }
+    }}
+    transition={{ 
+      duration: 0.6, 
+      delay: index * 0.1,
+      type: "spring",
+      stiffness: 100
+    }}
+    viewport={{ once: true, margin: "-50px" }}
+    className="cursor-pointer"
+  >
     <motion.div
-      initial={{ opacity: 0, scale: 0, y: 20 }}
-      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-      whileHover={{ 
-        scale: 1.1, 
-        y: -5,
-        transition: { duration: 0.2 }
-      }}
-      transition={{ 
-        duration: 0.6, 
-        delay: index * 0.1,
-        type: "spring",
-        stiffness: 100
-      }}
-      viewport={{ once: true, margin: "-50px" }}
-      className="relative group cursor-pointer"
+      whileHover={{ scale: 1.05 }}
+      className={`bg-gradient-to-r ${category.color} px-6 py-3 rounded-full font-semibold text-dark-50 shadow-lg relative overflow-hidden`}
     >
-      <motion.div
-        whileHover={{ scale: 1.05 }}
-        className={`bg-gradient-to-r ${category.color} px-6 py-3 rounded-full font-semibold text-dark-50 shadow-lg relative overflow-hidden`}
-      >
-        <span className="relative z-10">{skill}</span>
-        {/* Efeito de brilho ao hover */}
-        <div className="absolute inset-0 bg-white/20 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-500"></div>
-      </motion.div>
-      
-      {/* Tooltip */}
-      <div className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        <div className="glass-effect px-3 py-1 rounded-lg whitespace-nowrap text-sm">
-          {category.category}
-        </div>
-      </div>
+      <span className="relative z-10">{skill}</span>
+      {/* Efeito de brilho ao hover (opcional - pode manter ou remover) */}
+      <div className="absolute inset-0 bg-white/20 transform -skew-x-12 translate-x-[-100%] group-hover:translate-x-[200%] transition-transform duration-500"></div>
     </motion.div>
-  )
+  </motion.div>
+)
 
   return (
     <section id="skills" className="py-20 relative overflow-hidden">

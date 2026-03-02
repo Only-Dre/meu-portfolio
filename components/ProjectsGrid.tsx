@@ -27,9 +27,9 @@ const ProjectsGrid = () => {
     {
       id: 2,
       title: "Portfólio Pessoal",
-      description: "Este próprio site de portfólio desenvolvido com Next.js e Tailwind CSS",
+      description: "Portfólio full-stack construído com Next.js App Router, TypeScript e Tailwind CSS. Inclui animações com Framer Motion, design responsivo e deploy otimizado na Vercel.",
       category: "Frontend",
-      technologies: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"],
+      technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "React"],
       status: "Em Andamento",
       github: "https://github.com/Only-Dre/meu-portfolio",
       live: "https://github.com/Only-Dre/meu-portfolio",

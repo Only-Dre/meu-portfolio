@@ -198,7 +198,7 @@ const ExperienceTimeline = () => {
               <span>Especialização</span>
             </div>
             <div className="w-full bg-dark-800 rounded-full h-2 mt-2">
-              <div className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 h-2 rounded-full w-3/4"></div>
+              <div className="bg-gradient-to-r from-green-400 via-blue-400 h-2 rounded-full w-2/4"></div>
             </div>
           </div>
         </motion.div>
