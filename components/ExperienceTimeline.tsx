@@ -17,7 +17,6 @@ const ExperienceTimeline = () => {
       achievements: ["2º Ano Cursando", "Projetos Acadêmicos"],
       level: "graduation",
       type: "education",
-      // notes: Balão-guia de comentários para personalização - EXEMPLO DE USO
       notes: "Disciplinas serão atualizadas conforme o avanço!"
     },
     {
@@ -44,108 +43,199 @@ const ExperienceTimeline = () => {
       level: "self-taught",
       type: "personal-development",
     },
-    
   ]
 
   const TimelineItem = ({ experience, index }: { experience: any; index: number }) => {
-    const ref = useRef(null)
-    const { scrollYProgress } = useScroll({
-      target: ref,
-      offset: ["start end", "center center"]
-    })
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"]
+  })
 
-    const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.2, 1, 1, 0.2])
-    const x = useTransform(scrollYProgress, [0, 0.5, 1], index % 2 === 0 ? [-100, 0, 100] : [100, 0, -100])
+  // ANIMAÇÕES ESTILIZADAS SEM ROTAÇÃO
+  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1.02, 1.02, 0.95])
+  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [1, 1, 1, 1])
+  
+  // Efeito de flutuação suave e estática
+  const floatY = useTransform(scrollYProgress, [0, 0.5, 1], [0, -3, 0])
+  
+  // Efeito de brilho sutil
+  const glow = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], 
+    ["0px 0px 0px rgba(244, 63, 94, 0)", "0px 0px 15px rgba(244, 63, 94, 0.2)", "0px 0px 15px rgba(244, 63, 94, 0.2)", "0px 0px 0px rgba(244, 63, 94, 0)"]
+  )
 
-    const getLevelColor = (level: string) => {
-      switch(level) {
-        case 'graduation': return 'from-blue-400 to-blue-600'
-        case 'self-taught': return 'from-purple-400 to-purple-600' 
-        case 'technical': return 'from-green-400 to-green-600'
-        default: return 'from-orange-400 to-orange-600'
-      }
+  // Efeito de desfoque sutil na entrada
+  const blur = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], 
+    ["blur(4px)", "blur(0px)", "blur(0px)", "blur(4px)"]
+  )
+
+  const getLevelColor = (level: string) => {
+    switch(level) {
+      case 'graduation': return 'from-blue-400 to-blue-600'
+      case 'self-taught': return 'from-purple-400 to-purple-600' 
+      case 'technical': return 'from-green-400 to-green-600'
+      default: return 'from-orange-400 to-orange-600'
     }
-
-    const getLevelIcon = (level: string) => {
-      switch(level) {
-        case 'graduation': return <GraduationCap className="w-3 h-3" />
-        case 'self-taught': return <BookOpen className="w-3 h-3" />
-        case 'technical': return <Code2 className="w-3 h-3" />
-        default: return <Award className="w-3 h-3" />
-      }
-    }
-
-    return (
-      <motion.div
-        ref={ref}
-        style={{ opacity, x }}
-        className={`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-12`}
-      >
-        <div className={`max-w-lg ${index % 2 === 0 ? 'ml-0' : 'mr-0'}`}>
-          <motion.div
-            whileHover={{ scale: 1.02, y: -5 }}
-            className="glass-effect p-6 rounded-2xl relative hover-glow"
-          >
-            {/* Timeline Dot */}
-            <div className={`absolute top-6 w-4 h-4 rounded-full bg-gradient-to-r ${getLevelColor(experience.level)} ${index % 2 === 0 ? '-right-2' : '-left-2'}`}></div>
-
-            {/* Level Badge */}
-            <div className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold mb-4 bg-gradient-to-r ${getLevelColor(experience.level)} text-dark-50`}>
-              {getLevelIcon(experience.level)}
-              {experience.type.toUpperCase()}
-            </div>
-
-            {/* Content */}
-            <div className="mb-4">
-              <h3 className="text-xl font-bold mb-2 text-dark-100">{experience.title}</h3>
-              <p className="text-primary-500 font-semibold mb-2">{experience.company}</p>
-              
-              <div className="flex items-center space-x-4 text-dark-400 text-sm mb-3">
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>{experience.period}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="w-4 h-4" />
-                  <span>{experience.location}</span>
-                </div>
-              </div>
-              
-              <p className="text-dark-300 leading-relaxed mb-4">{experience.description}</p>
-              
-              {/* Notas Personalizáveis */}
-              {experience.notes && (
-                <div className="mt-3 p-3 bg-primary-500/10 rounded-lg">
-                  <p className="text-primary-300 text-sm italic">
-                    💡 {experience.notes}
-                  </p>
-                </div>
-              )}
-            </div>
-
-            {/* Technologies */}
-            <div className="flex flex-wrap gap-2 mb-4">
-              {experience.technologies.map((tech: string) => (
-                <span key={tech} className="px-3 py-1 bg-dark-800/50 rounded-full text-sm text-dark-400 border border-dark-700">
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            {/* Achievements */}
-            <div className="flex flex-wrap gap-2">
-              {experience.achievements.map((achievement: string) => (
-                <span key={achievement} className="flex items-center gap-1 px-2 py-1 bg-primary-500/20 rounded text-xs text-primary-300">
-                  <Award className="w-3 h-3" />
-                  {achievement}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
-    )
   }
+
+  const getLevelIcon = (level: string) => {
+    switch(level) {
+      case 'graduation': return <GraduationCap className="w-3 h-3" />
+      case 'self-taught': return <BookOpen className="w-3 h-3" />
+      case 'technical': return <Code2 className="w-3 h-3" />
+      default: return <Award className="w-3 h-3" />
+    }
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ 
+        opacity, // Sempre visível
+        scale,
+        y: floatY,
+        filter: `${glow} ${blur}`
+      }}
+      className={`flex ${index % 2 === 0 ? 'justify-start' : 'justify-end'} mb-12`}
+    >
+      {/* Card estático mas elegante */}
+      <div className={`max-w-xl ${index % 2 === 0 ? 'ml-0' : 'mr-0'}`}>
+        <motion.div
+          whileHover={{ 
+            scale: 1.03,
+            y: -4,
+            boxShadow: "0px 8px 30px rgba(244, 63, 94, 0.3)",
+            borderColor: "rgba(244, 63, 94, 0.3)",
+            transition: { 
+              type: "spring",
+              stiffness: 400,
+              damping: 25
+            }
+          }}
+          className="glass-effect p-6 rounded-2xl relative border border-white/5 hover-glow"
+          style={{
+            boxShadow: glow
+          }}
+        >
+          {/* Timeline Dot Animado suavemente */}
+          <motion.div 
+            className={`absolute top-6 w-3 h-3 rounded-full bg-gradient-to-r ${getLevelColor(experience.level)} ${index % 2 === 0 ? '-right-1.5' : '-left-1.5'}`}
+            whileHover={{ scale: 1.8 }}
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.7, 1, 0.7]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          />
+
+          {/* Level Badge com efeito sutil */}
+          <motion.div
+            className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold mb-4 bg-gradient-to-r ${getLevelColor(experience.level)} text-dark-50`}
+            whileHover={{ scale: 1.05 }}
+          >
+            {getLevelIcon(experience.level)}
+            {experience.type.toUpperCase()}
+          </motion.div>
+
+          {/* Content */}
+          <div className="mb-4">
+            <motion.h3 
+              className="text-xl font-bold mb-2 text-dark-100"
+              whileHover={{ x: 2 }}
+            >
+              {experience.title}
+            </motion.h3>
+            
+            <motion.p 
+              className="text-primary-500 font-semibold mb-2"
+              whileHover={{ x: 5 }}
+            >
+              {experience.company}
+            </motion.p>
+            
+            <div className="flex items-center space-x-4 text-dark-400 text-sm mb-3">
+              <motion.div 
+                className="flex items-center gap-1"
+                whileHover={{ scale: 1.05 }}
+              >
+                <Calendar className="w-4 h-4" />
+                <span>{experience.period}</span>
+              </motion.div>
+              <motion.div 
+                className="flex items-center gap-1"
+                whileHover={{ scale: 1.05 }}
+              >
+                <MapPin className="w-4 h-4" />
+                <span>{experience.location}</span>
+              </motion.div>
+            </div>
+            
+            <motion.p 
+              className="text-dark-300 leading-relaxed mb-4"
+              whileHover={{ color: "#f1f5f9" }}
+            >
+              {experience.description}
+            </motion.p>
+            
+            {/* Notas Personalizáveis */}
+            {experience.notes && (
+              <motion.div 
+                className="mt-3 p-3 bg-primary-500/10 rounded-lg"
+                whileHover={{ backgroundColor: "rgba(244, 63, 94, 0.15)" }}
+              >
+                <p className="text-primary-300 text-sm italic">
+                  💡 {experience.notes}
+                </p>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Technologies com efeito */}
+          <div className="flex flex-wrap gap-2 mb-4">
+            {experience.technologies.map((tech: string, techIndex: number) => (
+              <motion.span 
+                key={tech}
+                className="px-3 py-1 bg-dark-800/50 rounded-full text-sm text-dark-400 border border-dark-700"
+                whileHover={{ 
+                  scale: 1.1,
+                  backgroundColor: "rgba(244, 63, 94, 0.1)",
+                  color: "#f43f5e"
+                }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: techIndex * 0.1 }}
+              >
+                {tech}
+              </motion.span>
+            ))}
+          </div>
+
+          {/* Achievements */}
+          <div className="flex flex-wrap gap-2">
+            {experience.achievements.map((achievement: string, achievementIndex: number) => (
+              <motion.span 
+                key={achievement}
+                className="flex items-center gap-1 px-2 py-1 bg-primary-500/20 rounded text-xs text-primary-300"
+                whileHover={{ scale: 1.05 }}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: achievementIndex * 0.05 }}
+              >
+                <Award className="w-3 h-3" />
+                {achievement}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
+
 
   return (
     <section id="experience" className="py-20">
@@ -208,4 +298,3 @@ const ExperienceTimeline = () => {
 }
 
 export default ExperienceTimeline
-
