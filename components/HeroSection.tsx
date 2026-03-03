@@ -7,30 +7,27 @@ const HeroSection = () => {
   return (
     <section id="home" className="min-h-screen relative flex items-center justify-start overflow-hidden">
       
-      {/* Background Effects - LIMPO */}
+      {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900"></div>
         
-        {/* Efeito de brilho REMOVIDO ou MUITO SUAVE */}
         <div className="absolute top-1/2 left-1/4 transform -translate-y-1/2 w-64 h-64 bg-primary-500/1 rounded-full blur-xl"></div>
       </div>
 
       {/* Conteúdo Principal - Alinhado à esquerda */}
       <div className="relative z-10 px-6 max-w-2xl ml-8 lg:ml-16 xl:ml-32">
         
-        {/* Badge discreta - SEM PONTO VERMELHO */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="inline-flex items-center gap-2 mb-6"
         >
-          {/* PONTO REMOVIDO - usando ícone instead */}
           <Sparkles className="w-4 h-4 text-primary-500" />
           <span className="text-sm font-medium text-primary-300">Disponível para projetos</span>
         </motion.div>
 
-        {/* Título Principal - Mais compacto */}
+        {/* Título Principal */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -43,17 +40,17 @@ const HeroSection = () => {
           </h1>
         </motion.div>
 
-        {/* Subtítulo - Mais direto */}
+        {/* Subtítulo */}
         <motion.p
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg lg:text-xl text-dark-300 mb-8 leading-relaxed max-w-md"
         >
-          Desenvolvedor em formação, transformando ideias em código através da tecnologia.
+          Desenvolvedor FullStack, transformando ideias em código através da tecnologia.
         </motion.p>
 
-        {/* Informações em linha - SEM PONTOS VERMELHOS */}
+        {/* Informações em linha */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -62,7 +59,7 @@ const HeroSection = () => {
         >
           <div className="flex items-center gap-2 text-dark-400">
             <Code2 className="w-4 h-4 text-primary-500" />
-            <span className="text-sm">ADS - SENAI</span>
+            <span className="text-sm">Graduando</span>
           </div>
           <div className="flex items-center gap-2 text-dark-400">
             <Cpu className="w-4 h-4 text-primary-500" />
@@ -74,7 +71,6 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
-        {/* CTA Buttons - Mais compactos */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -109,36 +105,15 @@ const HeroSection = () => {
           className="flex gap-6 mt-12"
         >
           <div className="text-center">
-            <div className="text-2xl font-bold gradient-text">2º</div>
-            <div className="text-dark-400 text-xs">Ano ADS</div>
+            <div className="text-2xl font-bold gradient-text">Buscando</div>
+            <div className="text-dark-400">Projetos</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold gradient-text">5+</div>
-            <div className="text-dark-400 text-xs">Projetos</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold gradient-text">💜</div>
-            <div className="text-dark-400 text-xs">Paixão</div>
+            <div className="text-2xl font-bold gradient-text">Perseguindo</div>
+            <div className="text-dark-400">Inovação</div>
           </div>
         </motion.div>
       </div>
-
-      {/* Scroll Indicator - Mais discreto */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-      >
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-          className="flex flex-col items-center text-primary-400"
-        >
-          <span className="text-xs mb-1">Scroll</span>
-          <ChevronDown className="w-4 h-4" />
-        </motion.div>
-      </motion.div>
     </section>
   )
 }

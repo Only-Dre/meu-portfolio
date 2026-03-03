@@ -77,10 +77,6 @@ const SkillsCloud = () => {
           <h2 className="text-dynamic-lg font-black mb-4">
             <span className="gradient-text">Skills</span> & Tecnologias
           </h2>
-          <p className="text-dynamic-md text-dark-300 max-w-3xl mx-auto leading-relaxed">
-            Em processo de aprendizado do ecossistema de desenvolvimento moderno, 
-            desde a concepção até a implantação em produção.
-          </p>
         </motion.div>
 
         {/* Grid de Categorias */}

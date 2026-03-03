@@ -22,7 +22,7 @@ const AboutMe = () => {
     {
       icon: GraduationCap,
       title: "Concluir a Graduação",
-      description: "Finalizar o curso de ADS com excelência acadêmica",
+      description: "Finalizar o Curso Superior com excelência acadêmica",
       timeline: "2026",
       status: "Cursando"
     },
@@ -76,8 +76,9 @@ const AboutMe = () => {
               </p>
               
               <p className="text-dark-300 leading-relaxed mb-4">
-                Atualmente, estou no <span className="text-primary-400 font-semibold">2º ano de Análise e Desenvolvimento de Sistemas no SENAI</span>, 
-                onde combino teoria e prática para construir uma base sólida em desenvolvimento de software.
+                Atualmente, estou cursando <span className="text-primary-400 font-semibold">2º ano de Desenvolvimento e Tecnologia no SENAI</span>, 
+                enquanto também estudo separadamente e afundo sobre <span className='text-primary-400 font-semibold'>tecnologias emergentes</span>, 
+                onde combino teoria e prática para construir uma base sólida.
               </p>
               
               <p className="text-dark-300 leading-relaxed">

@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Linkedin, Github, MessageCircle, Send } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mail, Phone, MapPin, Linkedin, Github, MessageCircle, Send, X, CheckCircle } from 'lucide-react'
 import { FaDiscord } from 'react-icons/fa'
 import { useState } from 'react'
 
@@ -12,6 +12,20 @@ const ContactFooter = () => {
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showPopup, setShowPopup] = useState(false)
+  const [popupType, setPopupType] = useState<'success' | 'error'>('success')
+  const [popupMessage, setPopupMessage] = useState('')
+
+  const showNotification = (type: 'success' | 'error', message: string) => {
+    setPopupType(type)
+    setPopupMessage(message)
+    setShowPopup(true)
+    
+    // Auto-fechar após 5 segundos
+    setTimeout(() => {
+      setShowPopup(false)
+    }, 5000)
+  }
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,20 +47,94 @@ const ContactFooter = () => {
       })
 
       if (response.ok) {
-        alert('✅ Mensagem enviada com sucesso! Entrarei em contato em breve.')
+        showNotification('success', '✅ Mensagem enviada com sucesso! Entrarei em contato em breve.')
         setFormData({ name: '', email: '', message: '' })
       } else {
+        showNotification('error', '⚠️ Ocorreu um erro. Redirecionando para email...')
+        setTimeout(() => {
+          window.open(
+            `mailto:workofdre@proton.me?subject=Contato de ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AEnviado por: ${formData.name} (${formData.email})`
+          )
+        }, 2000)
+      }
+    } catch (error) {
+      showNotification('error', '📧 Falha no envio. Abrindo cliente de email...')
+      setTimeout(() => {
         window.open(
           `mailto:workofdre@proton.me?subject=Contato de ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AEnviado por: ${formData.name} (${formData.email})`
         )
-      }
-    } catch (error) {
-      window.open(
-        `mailto:workofdre@proton.me?subject=Contato de ${formData.name}&body=${encodeURIComponent(formData.message)}%0D%0A%0D%0AEnviado por: ${formData.name} (${formData.email})`
-      )
+      }, 2000)
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  // Pop-up Component
+  const NotificationPopup = () => {
+    return (
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -50, scale: 0.9 }}
+            className="fixed top-6 right-6 z-50 max-w-sm w-full"
+          >
+            <div className={`
+              relative glass-effect rounded-2xl p-4 border-l-4 shadow-2xl
+              ${popupType === 'success' 
+                ? 'border-green-500 bg-green-500/10' 
+                : 'border-yellow-500 bg-yellow-500/10'
+              }
+            `}>
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute top-3 right-3 p-1 rounded-full hover:bg-white/10 transition-colors"
+                aria-label="Fechar notificação"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              
+              <div className="flex items-start gap-3 pr-8">
+                <div className={`
+                  p-2 rounded-full
+                  ${popupType === 'success' ? 'bg-green-500/20' : 'bg-yellow-500/20'}
+                `}>
+                  {popupType === 'success' ? (
+                    <CheckCircle className="w-5 h-5 text-green-400" />
+                  ) : (
+                    <MessageCircle className="w-5 h-5 text-yellow-400" />
+                  )}
+                </div>
+                
+                <div className="flex-1">
+                  <h4 className={`
+                    font-semibold mb-1
+                    ${popupType === 'success' ? 'text-green-300' : 'text-yellow-300'}
+                  `}>
+                    {popupType === 'success' ? 'Sucesso!' : 'Atenção'}
+                  </h4>
+                  <p className="text-dark-200 text-sm leading-relaxed">
+                    {popupMessage}
+                  </p>
+                </div>
+              </div>
+
+              {/* Barra de progresso */}
+              <motion.div
+                initial={{ width: '100%' }}
+                animate={{ width: '0%' }}
+                transition={{ duration: 5, ease: 'linear' }}
+                className={`
+                  h-1 mt-3 rounded-full
+                  ${popupType === 'success' ? 'bg-green-500' : 'bg-yellow-500'}
+                `}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    )
   }
 
   const contactMethods = [
@@ -108,9 +196,11 @@ const ContactFooter = () => {
 
   return (
     <>
+      {/* Notification Popup */}
+      <NotificationPopup />
+
       {/* Contact Section */}
       <section id="contact" className="py-20 relative overflow-hidden">
-        {/* Background Effect */}
         <div className="absolute inset-0 bg-gradient-to-br from-dark-900 via-primary-900/20 to-dark-900"></div>
         
         <div className="container mx-auto px-6 relative z-10">
@@ -129,7 +219,7 @@ const ContactFooter = () => {
             </p>
           </motion.div>
 
-          {/* Formulário de Contato */}
+          {/* Contact Form */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -144,34 +234,50 @@ const ContactFooter = () => {
                   placeholder="Seu nome"
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="glass-effect-light p-3 rounded-lg w-full text-black placeholder-dark-400"
+                  className="glass-effect-light p-3 rounded-lg w-full text-black placeholder-dark-400 border border-primary-500/20 focus:border-primary-500/50 transition-colors"
                   required
+                  disabled={isSubmitting}
                 />
                 <input
                   type="email"
                   placeholder="Seu email"
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  className="glass-effect-light p-3 rounded-lg w-full text-black placeholder-dark-400"
+                  className="glass-effect-light p-3 rounded-lg w-full text-black placeholder-dark-400 border border-primary-500/20 focus:border-primary-500/50 transition-colors"
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <textarea
                 placeholder="Sua mensagem..."
                 value={formData.message}
                 onChange={(e) => setFormData({...formData, message: e.target.value})}
-                className="glass-effect-light p-3 rounded-lg w-full h-32 text-black placeholder-dark-400"
+                className="glass-effect-light p-3 rounded-lg w-full h-32 text-black placeholder-dark-400 border border-primary-500/20 focus:border-primary-500/50 transition-colors resize-none"
                 required
+                disabled={isSubmitting}
               />
               <motion.button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="gradient-button px-8 py-3 rounded-full font-semibold w-full flex items-center justify-center gap-2 text-dark-50"
+                whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
+                whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
+                className="gradient-button px-8 py-3 rounded-full font-semibold w-full flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
               >
-                <Send className="w-5 h-5" />
-                {isSubmitting ? 'Enviando...' : 'Enviar Mensagem'}
+                {isSubmitting ? (
+                  <>
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                    />
+                    Enviando...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    Enviar Mensagem
+                  </>
+                )}
               </motion.button>
             </form>
           </motion.div>

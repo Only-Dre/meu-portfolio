@@ -304,3 +304,8 @@ nav:not(.glass-effect) {
     transition-duration: 0.01ms !important;
   }
 }
+
+.carousel-arrow {
+  backdrop-filter: blur(8px) saturate(120%) !important;
+  background: rgba(30, 41, 59, 0.7) !important;
+}
