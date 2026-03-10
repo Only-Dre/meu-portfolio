@@ -1,0 +1,182 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(244, 63, 94, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(244, 63, 94, 0.08) 0%, transparent 50%),
+    linear-gradient(135deg, #000000 0%, #0a0a0a 50%, #000000 100%);
+  color: #f8fafc;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Gradiente de texto */
+.gradient-text {
+  background: linear-gradient(135deg,
+    #fecdd3 0%,
+    #fda4af 25%,
+    #f43f5e 50%,
+    #e11d48 75%,
+    #be123c 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+/* Glassmorphism */
+.glass-effect {
+  background: linear-gradient(135deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(30, 41, 59, 0.6) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  border-radius: 24px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(244, 63, 94, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(244, 63, 94, 0.08),
+    transparent);
+  transition: left 0.5s ease;
+}
+
+.glass-effect:hover::before {
+  left: 100%;
+}
+
+/* Hover glow */
+.hover-glow:hover {
+  box-shadow:
+    0 0 20px rgba(244, 63, 94, 0.2),
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(244, 63, 94, 0.1);
+}
+
+/* Botão gradiente */
+.gradient-button {
+  background: linear-gradient(135deg,
+    #fda4af 0%,
+    #f43f5e 50%,
+    #e11d48 100%);
+  background-size: 200% 200%;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent);
+  transition: left 0.5s ease;
+}
+
+.gradient-button:hover::before {
+  left: 100%;
+}
+
+.gradient-button:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow:
+    0 12px 30px rgba(244, 63, 94, 0.45),
+    0 0 20px rgba(244, 63, 94, 0.2);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #fda4af, #f43f5e);
+  border-radius: 4px;
+  border: 2px solid #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+}
+
+/* Animações de entrada */
+.fade-in-up {
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.stagger-delay-1 { animation-delay: 0.1s; }
+.stagger-delay-2 { animation-delay: 0.2s; }
+.stagger-delay-3 { animation-delay: 0.3s; }
+.stagger-delay-4 { animation-delay: 0.4s; }
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+  }
+}
+
+/* Reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
