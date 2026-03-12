@@ -36,7 +36,7 @@ const contactMethods = [
     icon: FaDiscord,
     label: "Discord",
     value: "OnlyDre",
-    href: "https://discord.gg/gAHfFjVy",
+    href: "https://discord.gg/u8z5SPrA",
     description: "Me adicione no Discord",
   },
   {
